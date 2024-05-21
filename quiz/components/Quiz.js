@@ -45,7 +45,7 @@ export default function Quiz() {
     // Criando uma View com alinhamento centralizado e ocupando 90% da tela
     <View style={{alignItems: 'center', width: '90%', marginStart: 'auto', marginEnd: 'auto'}}>
         {/* Renderizando o logo */}
-        <Image source={require('../assets/logo.png')} style={{width: '90%', height: 150, marginBottom: 45, height: 150}}/>
+        <Image source={require('../assets/logo.png')} style={{ width: '90%', height: 150, marginBottom: 45 }}/>
         {/* Renderizando a pergunta com estilo de multilinha e justificado */}
         <Text style={{fontSize: 16, marginBottom: 5, textAlign: 'justify', width: '90%'}} multiline={true}>{pergunta}</Text>
         {/* Renderizando as alternativas */}

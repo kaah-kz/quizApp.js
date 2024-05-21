@@ -62,7 +62,7 @@ export default function Edit() {
         db.transaction(tx => {
             tx.executeSql('SELECT * FROM perguntas WHERE id > ? ORDER BY id LIMIT 1;', [id], (_, {
                 rows}) => {
-                    if(rows.legth > 0) {
+                    if(rows.length > 0) {
                         let pergunta = rows._array[0];
                         setId(pergunta.id);
                         setPergunta(pergunta.pergunta);
