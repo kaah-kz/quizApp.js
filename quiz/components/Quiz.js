@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import { Image, Button, Text, View, Alert } from "react-native";
 import * as SQLite from 'expo-sqlite';
 
+import styles from '../components/styles';
+
 // Abrindo o banco de dados SQLite
 const db = SQLite.openDatabase('quiz.db');
 

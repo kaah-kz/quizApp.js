@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { Image, Button, TextInput, View, Alert } from "react-native";
 import * as SQLite from 'expo-sqlite';
 
+import styles from '../components/Add.style';
+
 // Abrindo o banco de dados SQLite
     const db = SQLite.openDatabase('quiz.db');
 
@@ -45,18 +47,18 @@ const adicionarPergunta = () => {
 
     // Renderizando o componente
     return(
-        <View style={{alignItems: 'center'}}>
+        <View>
             {/* Renderizando o logo */}
-            <Image source={require('../assets/logo.png')} style={{width: '90%', height: 150, marginBottom: 45}}/>
+            <Image style={styles.Image}source={require('../assets/logo2.jpg')}/>
             {/* Renderizando os campos de texto com a borda e o espaçamento especificados */}
-            <TextInput placeholder="Digite a pergunta" value={pergunta} multiline={true} onChangeText={setPergunta} numberOfLines={4} style={{height: 80, borderColor: 'blue', borderWidth: 1, marginBottom: 15, width: '90%'}}/>
-            <TextInput placeholder="Digite a alternativa A" value={alternativaA} onChangeText={setAlternativaA} numberOfLines={4} style={{height: 80, borderColor: 'blue', borderWidth: 1, marginBottom: 5, width: '90%', height: 50}}/>
-            <TextInput placeholder="Digite a alternativa B" value={alternativaB} onChangeText={setAlternativaB} numberOfLines={4} style={{height: 80, borderColor: 'blue', borderWidth: 1, marginBottom: 5, width: '90%', height: 50}}/>
-            <TextInput placeholder="Digite a alternativa C" value={alternativaC} onChangeText={setAlternativaC} numberOfLines={4} style={{height: 80, borderColor: 'blue', borderWidth: 1, marginBottom: 5, width: '90%', height: 50}}/>
-            <TextInput placeholder="Digite a alternativa D" value={alternativaD} onChangeText={setAlternativaD} numberOfLines={4} style={{height: 80, borderColor: 'blue', borderWidth: 1, marginBottom: 5, width: '90%', height: 50}}/>
-            <TextInput placeholder="Digite a letra da resposta correta" value={respostaCorreta} onChangeText={setRespostaCorreta} numberOfLines={4} style={{height: 80, borderColor: 'blue', borderWidth: 1, marginBottom: 5, width: '90%', height: 50}}/>
+            <TextInput style={styles.textInput} placeholder="Digite a pergunta" value={pergunta} multiline={true} onChangeText={setPergunta} numberOfLines={4}/>
+            <TextInput style={styles.textInput} placeholder="Digite a alternativa A" value={alternativaA} onChangeText={setAlternativaA} numberOfLines={4}/>
+            <TextInput style={styles.textInput} placeholder="Digite a alternativa B" value={alternativaB} onChangeText={setAlternativaB} numberOfLines={4}/>
+            <TextInput style={styles.textInput} placeholder="Digite a alternativa C" value={alternativaC} onChangeText={setAlternativaC} numberOfLines={4}/>
+            <TextInput style={styles.textInput} placeholder="Digite a alternativa D" value={alternativaD} onChangeText={setAlternativaD} numberOfLines={4}/>
+            {/* <TextInput placeholder="Digite a letra da resposta correta" value={respostaCorreta} onChangeText={setRespostaCorreta} numberOfLines={4} style={{height: 80, borderColor: 'blue', borderWidth: 1, marginBottom: 5, width: '90%', height: 50}}/> */}
             {/* Renderizando o botão para adicionar uma pergunta */}
-            <Button title="Adicionar pergunta" onPress={adicionarPergunta}/>
+            <Button style={styles.Button} title="Adicionar pergunta" onPress={adicionarPergunta}/>
         </View>
     );
 }
