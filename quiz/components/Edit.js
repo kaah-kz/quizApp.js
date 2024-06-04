@@ -2,8 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Image, Button, TextInput, View, Alert } from "react-native";
 import * as SQLite from 'expo-sqlite';
-
-import styles from '../components/styles';
+import { styles } from '../components/styles';
 
 // Abrindo o banco de dados SQLite
 const db = SQLite.openDatabase('quiz.db');
@@ -19,12 +18,12 @@ export default function Edit() {
     const [alternativaD, setAlternativaD] = useState('');
     const [respostaCorreta, setRespostaCorreta] = useState('');
 
-    //Carregando a primeira pergunta quando o componente é montado
+    // Carregando a primeira pergunta quando o componente é montado
     useEffect(() => {
         carregarPergunta();
     }, []);
 
-    //Função para carregar a primeira pergunta do banco de dados
+    // Função para carregar a primeira pergunta do banco de dados
     const carregarPergunta = () => {
         db.transaction(tx => {
             tx.executeSql('SELECT * FROM perguntas ORDER BY id LIMIT 1;', [], (_, { rows }) => {
@@ -49,7 +48,6 @@ export default function Edit() {
         });
     };
 
-
     const deletarPergunta = () => {
         db.transaction(tx => {
             tx.executeSql('DELETE FROM perguntas WHERE id = ?;', [id], () => {
@@ -62,29 +60,8 @@ export default function Edit() {
     // Função para carregar a próxima pergunta do banco de dados
     const proximaPergunta = () => {
         db.transaction(tx => {
-            tx.executeSql('SELECT * FROM perguntas WHERE id > ? ORDER BY id LIMIT 1;', [id], (_, {
-                rows}) => {
-                    if(rows.length > 0) {
-                        let pergunta = rows._array[0];
-                        setId(pergunta.id);
-                        setPergunta(pergunta.pergunta);
-                        setAlternativaA(pergunta.alternativaA);
-                        setAlternativaB(pergunta.alternativaB);
-                        setAlternativaC(pergunta.alternativaC);
-                        setAlternativaD(pergunta.alternativaD);
-                        setRespostaCorreta(pergunta.resposta_correta);
-                    } else {
-                        Alert.alert('Informação', 'Esta é a última pergunta.');
-                    }
-                });
-        });
-    };
-
-    // Função para carregar a pergunta anterior do banco de dados
-    const perguntaAnterior = () => {
-        db.transaction(tx => {
-                tx.executeSql('SELECT * FROM perguntas WHERE id < ? ORDER BY id DESC LIMIT 1;', [id], (_, { rows }) => {
-                    if (rows.length > 0) {
+            tx.executeSql('SELECT * FROM perguntas WHERE id > ? ORDER BY id LIMIT 1;', [id], (_, { rows}) => {
+                if(rows.length > 0) {
                     let pergunta = rows._array[0];
                     setId(pergunta.id);
                     setPergunta(pergunta.pergunta);
@@ -94,37 +71,46 @@ export default function Edit() {
                     setAlternativaD(pergunta.alternativaD);
                     setRespostaCorreta(pergunta.resposta_correta);
                 } else {
-                Alert.alert('Informação', 'Esta é a primeira pergunta.');
+                    Alert.alert('Informação', 'Esta é a última pergunta.');
                 }
             });
         });
     };
-        
+
+    // Função para carregar a pergunta anterior do banco de dados
+    const perguntaAnterior = () => {
+        db.transaction(tx => {
+            tx.executeSql('SELECT * FROM perguntas WHERE id < ? ORDER BY id DESC LIMIT 1;', [id], (_, { rows }) => {
+                if (rows.length > 0) {
+                    let pergunta = rows._array[0];
+                    setId(pergunta.id);
+                    setPergunta(pergunta.pergunta);
+                    setAlternativaA(pergunta.alternativaA);
+                    setAlternativaB(pergunta.alternativaB);
+                    setAlternativaC(pergunta.alternativaC);
+                    setAlternativaD(pergunta.alternativaD);
+                    setRespostaCorreta(pergunta.resposta_correta);
+                } else {
+                    Alert.alert('Informação', 'Esta é a primeira pergunta.');
+                }
+            });
+        });
+    };
+
     return (
-        <View style={{alignItems: 'center'}}>
-            {/* Renderizando o logo */}
-            <Image source={require('../assets/logo.png')} style={{width: '90%', height: 150, marginBottom: 45}} />
-            {/* Renderizando os campos de texto com a borda e o espaçamento especificados */}
-            <TextInput placeholder="Digite a pergunta" value={pergunta} multiline={true} onChangeText={setPergunta} numberOfLines={4}
-        style={{height: 80, borderColor: 'blue', borderWidth: 1, marginBottom: 5, width: '90%'}} />
-            <TextInput placeholder="Digite a alternativa A" value={alternativaA} onChangeText={setAlternativaA} style={{borderColor:
-        'blue', borderWidth: 1, marginBottom: 5, width: '90%'}} />
-            <TextInput placeholder="Digite a alternativa B" value={alternativaB} onChangeText={setAlternativaB} style={{borderColor:
-        'blue', borderWidth: 1, marginBottom: 5, width: '90%'}} />
-            <TextInput placeholder="Digite a alternativa C" value={alternativaC} onChangeText={setAlternativaC} style={{borderColor:
-        'blue', borderWidth: 1, marginBottom: 5, width: '90%'}} />
-            <TextInput placeholder="Digite a alternativa D" value={alternativaD} onChangeText={setAlternativaD} style={{borderColor:
-        'blue', borderWidth: 1, marginBottom: 5, width: '90%'}} />
-            <TextInput placeholder="Digite a letra da resposta correta" value={respostaCorreta} onChangeText={setRespostaCorreta}
-        style={{borderColor: 'blue', borderWidth: 1, marginBottom: 5, width: '90%'}} />
-            {/* Renderizando os botões para atualizar e deletar a pergunta */}
-            <View style={{marginBottom: 15}}>
-                <Button title="Atualizar Pergunta" onPress={atualizarPergunta} style={{marginBottom: 5}}/>
-            </View>
-            <Button title="Deletar Pergunta" onPress={deletarPergunta} color={'red'} style={{marginBottom: 5}}/>
+        <View style={styles.container}>
+            <Image source={require('../assets/logo2.jpg')} style={styles.logo} />
+            <TextInput placeholder="Digite a pergunta" value={pergunta} multiline={true} onChangeText={setPergunta} style={styles.textInput} />
+            <TextInput placeholder="Digite a alternativa A" value={alternativaA} onChangeText={setAlternativaA} style={styles.textInput} />
+            <TextInput placeholder="Digite a alternativa B" value={alternativaB} onChangeText={setAlternativaB} style={styles.textInput} />
+            <TextInput placeholder="Digite a alternativa C" value={alternativaC} onChangeText={setAlternativaC} style={styles.textInput} />
+            <TextInput placeholder="Digite a alternativa D" value={alternativaD} onChangeText={setAlternativaD} style={styles.textInput} />
+            <TextInput placeholder="Digite a letra da resposta correta" value={respostaCorreta} onChangeText={setRespostaCorreta} style={styles.textInput} />
+            <Button title="Atualizar Pergunta" onPress={atualizarPergunta} style={styles.button} />
+            <Button title="Deletar Pergunta" onPress={deletarPergunta} color={'red'} style={styles.button} />
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '90%' }}>
-                <Button title="Voltar" onPress={perguntaAnterior} />
-                <Button title="Avançar" onPress={proximaPergunta} />
+                <Button style={styles.button} title="Voltar" onPress={perguntaAnterior} />
+                <Button style={styles.button} title="Avançar" onPress={proximaPergunta} />
             </View>
         </View>
     );

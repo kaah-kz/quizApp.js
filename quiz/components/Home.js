@@ -1,7 +1,7 @@
 import React from "react";
 import { Image, Button, View } from 'react-native';
 
-import styles from '../components/Add.style';
+import { styles } from '../components/styles';
 
 export default function Home({ navigation }) {
     return (

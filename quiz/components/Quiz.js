@@ -3,12 +3,12 @@ import React, { useState, useEffect } from "react";
 import { Image, Button, Text, View, Alert } from "react-native";
 import * as SQLite from 'expo-sqlite';
 
-import styles from '../components/styles';
+import { styles } from '../components/styles'; // Importando os estilos
 
 // Abrindo o banco de dados SQLite
 const db = SQLite.openDatabase('quiz.db');
 
-// Definindo o componete Quiz
+// Definindo o componente Quiz
 export default function Quiz() {
     // Definindo o estado inicial para a pergunta, as alternativas e a resposta correta
     const [pergunta, setPergunta] = useState('');
@@ -42,26 +42,26 @@ export default function Quiz() {
         }
     };
 
-    //Renderizando o componente
+    // Renderizando o componente
     return (
-    // Criando uma View com alinhamento centralizado e ocupando 90% da tela
-    <View style={{alignItems: 'center', width: '90%', marginStart: 'auto', marginEnd: 'auto'}}>
-        {/* Renderizando o logo */}
-        <Image source={require('../assets/logo.png')} style={{ width: '90%', height: 150, marginBottom: 45 }}/>
-        {/* Renderizando a pergunta com estilo de multilinha e justificado */}
-        <Text style={{fontSize: 16, marginBottom: 5, textAlign: 'justify', width: '90%'}} multiline={true}>{pergunta}</Text>
-        {/* Renderizando as alternativas */}
-        {alternativas.map((alternativa, index) => (
-            // Cada botão ocupa 90% da tela e tem uma margem inferior de 15px
-            <View style={{width: '90%', marginBottom: 15}}>
-                <Button key={index} title={`${String.fromCharCode(65 + index)}. ${alternativa}`} onPress={() =>
-                verificarResposta(String.fromCharCode(65 + index))}/>
+        // Criando uma View com alinhamento centralizado e ocupando 90% da tela
+        <View style={styles.container}>
+            {/* Renderizando o logo */}
+            <Image source={require('../assets/logo2.jpg')} style={styles.logo} />
+            {/* Renderizando a pergunta com estilo de multilinha e justificado */}
+            <Text style={styles.text}>{pergunta}</Text>
+            {/* Renderizando as alternativas */}
+            {alternativas.map((alternativa, index) => (
+                // Cada botão ocupa 90% da tela e tem uma margem inferior de 15px
+                <View key={index} style={styles.buttonContainer}>
+                    <Button title={`${String.fromCharCode(65 + index)}. ${alternativa}`} onPress={() =>
+                        verificarResposta(String.fromCharCode(65 + index))} />
+                </View>
+            ))}
+            {/* Renderizando o botão para carregar a próxima pergunta */}
+            <View style={styles.buttonContainer}>
+                <Button title="Próxima pergunta" onPress={carregarPergunta} />
             </View>
-        ))}
-        {/* Renderizando o botão para carregar a próxima pergunta */}
-        <View style={{width:'90%', marginBottom: 15}}>
-            <Button title="Próxima pergunta" onPress={carregarPergunta}/>
         </View>
-    </View>
     );
 };
